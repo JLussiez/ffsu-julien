@@ -2,7 +2,24 @@
 require('Connexion.php');
 require('Menu.php');
 
-if (isset($_GET['id'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $pdo = connect();
+
+    $memberId = $_POST['id'];
+    $name = $_POST['name'];
+    $first_name = $_POST['first_name'];
+    $birthdate = $_POST['birthdate'];
+    $license_number = $_POST['license_number'];
+
+    $query = "UPDATE license_member SET name=?, first_name=?, birthdate=?, license_number=? WHERE id_member=?";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute([$name, $first_name, $birthdate, $license_number, $memberId]);
+
+    $pdo = null;
+
+    header('Location: ListMember.php');
+    exit();
+} elseif (isset($_GET['id'])) {
     $memberId = $_GET['id'];
     $pdo = connect();
 
@@ -28,7 +45,7 @@ if (isset($_GET['id'])) {
 </head>
 <body>
     <h2>Modifier Membre</h2>
-    <form action="ListMember.php" method="post">
+    <form action="" method="post">
         <input type="hidden" name="id" value="<?= $member['id_member'] ?>">
         <label>Nom :</label>
         <input type="text" name="name" value="<?= $member['name'] ?>">
