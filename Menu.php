@@ -12,6 +12,7 @@
         <a href="index.php">Index</a>
         <a href="AddUsers.php">Add</a>
         <a href="ListUsers.php">Liste</a>
+        <a href="Excel.php">Excel</a>
     </nav>
 </body>
 
